@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Contact Profile - Shawn</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Custom styles to match the CRM's look and feel */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5; /* A neutral, professional background */
+        }
+        .material-icons {
+            font-size: 20px;
+        }
+        .top-bar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .main-content {
+            height: calc(100vh - 65px); /* Full height minus top bar */
+        }
+        .panel {
+            background-color: #ffffff;
+            border-right: 1px solid #e0e0e0;
+        }
+        .panel:last-child {
+            border-right: none;
+        }
+        .activity-timeline {
+            background-color: #f7f9fa;
+        }
+        .expansion-panel-header {
+            cursor: pointer;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .expansion-panel-content {
+            display: none; /* Hidden by default */
+        }
+        .expansion-panel-content.open {
+            display: block;
+        }
+        .chip {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .chip.active {
+            background-color: #1976d2;
+            color: white;
+        }
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px; /* Increased width for more content */
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        .prep-section {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .prep-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .prep-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        .prep-item .material-icons {
+            color: #4b5563;
+            margin-right: 0.75rem;
+            margin-top: 0.125rem;
+        }
+        .prep-item strong {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+        }
+        .prep-item p {
+            color: #6b7280;
+        }
+        /* Roleplay Modal Specific Styles */
+        #roleplayModal .modal-content {
+            max-width: 900px;
+            height: 80vh;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar h-16 flex items-center px-4 justify-between fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center space-x-4">
+            <i class="material-icons text-gray-600">menu</i>
+            <h1 class="text-xl font-medium text-gray-700">Contact Profile</h1>
+        </div>
+        <div class="flex items-center space-x-2">
+             <!-- "Prepare for Call" Button -->
+            <button id="prepareCallBtn" class="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                <i class="material-icons mr-2">phone_in_talk</i>
+                <span>Prepare for Call</span>
+            </button>
+            <button class="p-2 rounded-full hover:bg-gray-200"><i class="material-icons text-gray-600">apps</i></button>
+            <button class="p-2 rounded-full hover:bg-gray-200"><i class="material-icons text-gray-600">notifications</i></button>
+            <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">S</div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content pt-16 grid grid-cols-1 md:grid-cols-12">
+        <!-- Left Panel: Contact Details -->
+        <aside class="panel md:col-span-3 p-4 overflow-y-auto">
+            <div class="text-center py-4">
+                <div class="w-24 h-24 bg-gray-300 rounded-full mx-auto flex items-center justify-center mb-2">
+                    <span class="text-4xl text-gray-500">S</span>
+                </div>
+                <h2 class="text-2xl font-bold">Shawn</h2>
+                <p class="text-gray-500">Yellow Pages</p>
+                <div class="flex justify-center space-x-2 mt-4">
+                    <button class="p-2 rounded-full border border-gray-300 hover:bg-gray-100"><i class="material-icons text-blue-600">question_answer</i></button>
+                    <button class="p-2 rounded-full border border-gray-300 hover:bg-gray-100"><i class="material-icons text-blue-600">phone</i></button>
+                    <button class="p-2 rounded-full border border-gray-300 hover:bg-gray-100"><i class="material-icons text-blue-600">email</i></button>
+                    <button class="p-2 rounded-full border border-gray-300 hover:bg-gray-100"><i class="material-icons text-blue-600">more_horiz</i></button>
+                </div>
+            </div>
+
+            <!-- Accordion for Details -->
+            <div class="space-y-2 mt-6">
+                <div class="expansion-panel">
+                    <div class="expansion-panel-header flex justify-between items-center p-3">
+                        <h3 class="font-medium">Basic information</h3>
+                        <i class="material-icons transition-transform">expand_more</i>
+                    </div>
+                    <div class="expansion-panel-content p-3 space-y-3">
+                        <div><label class="text-xs text-gray-500">Phone number</label><p>+1-306-555-0101</p></div>
+                        <div><label class="text-xs text-gray-500">Email</label><p>shawn@yellowpages.ca</p></div>
+                        <div><label class="text-xs text-gray-500">Tags</label><p class="text-gray-400 italic">No tags</p></div>
+                    </div>
+                </div>
+                <div class="expansion-panel">
+                    <div class="expansion-panel-header flex justify-between items-center p-3">
+                        <h3 class="font-medium">About contact</h3>
+                        <i class="material-icons transition-transform">expand_more</i>
+                    </div>
+                    <div class="expansion-panel-content p-3 space-y-3">
+                        <div><label class="text-xs text-gray-500">Job title</label><p>Account Manager</p></div>
+                        <div><label class="text-xs text-gray-500">Lifecycle stage</label><p>Customer</p></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Panel: Activity Timeline -->
+        <section class="activity-timeline md:col-span-6 p-4 flex flex-col overflow-y-auto">
+            <!-- Activity Logger -->
+            <div class="bg-white rounded-lg p-4 shadow-sm mb-4">
+                <textarea class="w-full border-0 focus:ring-0 p-2" rows="2" placeholder="Share an update..."></textarea>
+                <div class="flex items-center justify-between mt-2">
+                    <div class="flex space-x-1">
+                        <button class="chip active px-3 py-1 text-sm rounded-full flex items-center space-x-1"><i class="material-icons text-sm">notes</i><span>Note</span></button>
+                        <button class="chip px-3 py-1 text-sm rounded-full flex items-center space-x-1"><i class="material-icons text-sm">email</i><span>Email</span></button>
+                        <button class="chip px-3 py-1 text-sm rounded-full flex items-center space-x-1"><i class="material-icons text-sm">phone</i><span>Call</span></button>
+                    </div>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Log Activity</button>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="flex-grow space-y-4">
+                 <h3 class="font-medium text-gray-600">Upcoming</h3>
+                 <div class="relative pl-8">
+                     <div class="absolute left-0 top-1 w-6 h-6 bg-white border-2 border-red-500 rounded-full flex items-center justify-center"><i class="material-icons text-red-500 text-base">assignment_turned_in</i></div>
+                     <div class="ml-4 p-4 bg-white rounded-lg shadow-sm">
+                         <p class="font-medium">Task assigned to Jasper Abrera</p>
+                         <p class="text-sm text-gray-600">Kaarthika-demo-1 thinks you are cool</p>
+                         <p class="text-xs text-red-500 mt-1">Due: Aug 22, 2:55 AM</p>
+                     </div>
+                 </div>
+                 <h3 class="font-medium text-gray-600 mt-6">August 2025</h3>
+                 <div class="relative pl-8">
+                     <div class="absolute left-0 top-1 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center"><i class="material-icons text-gray-600 text-base">notes</i></div>
+                     <div class="ml-4 p-4 bg-white rounded-lg shadow-sm">
+                         <p class="font-medium">Note by sumi</p>
+                         <p class="text-sm text-gray-600">Smith-demo-1</p>
+                         <p class="text-xs text-gray-400 mt-1">Aug 22, 2:54 AM</p>
+                     </div>
+                 </div>
+            </div>
+
+        </section>
+
+        <!-- Right Panel: Associations -->
+        <aside class="panel md:col-span-3 p-4 overflow-y-auto">
+             <div class="space-y-2 mt-6">
+                <div class="expansion-panel">
+                    <div class="expansion-panel-header flex justify-between items-center p-3">
+                        <h3 class="font-medium">Companies</h3>
+                        <i class="material-icons transition-transform">expand_more</i>
+                    </div>
+                    <div class="expansion-panel-content p-3">
+                        <button class="w-full border-2 border-dashed border-gray-300 text-gray-500 py-2 rounded-lg hover:bg-gray-50">Add company</button>
+                    </div>
+                </div>
+                <div class="expansion-panel">
+                    <div class="expansion-panel-header flex justify-between items-center p-3">
+                        <h3 class="font-medium">Campaigns</h3>
+                        <i class="material-icons transition-transform">expand_more</i>
+                    </div>
+                     <div class="expansion-panel-content p-3">
+                        <button class="w-full border-2 border-dashed border-gray-300 text-gray-500 py-2 rounded-lg hover:bg-gray-50">Add campaign</button>
+                    </div>
+                </div>
+                 <div class="expansion-panel">
+                    <div class="expansion-panel-header flex justify-between items-center p-3">
+                        <h3 class="font-medium">Files</h3>
+                        <i class="material-icons transition-transform">expand_more</i>
+                    </div>
+                     <div class="expansion-panel-content p-3 text-center">
+                         <i class="material-icons text-gray-400 text-4xl">attach_file</i>
+                         <p class="text-sm text-gray-500">No files attached yet</p>
+                        <button class="w-full mt-2 border-2 border-dashed border-gray-300 text-gray-500 py-2 rounded-lg hover:bg-gray-50">Add file</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Prepare for Call Modal -->
+    <div id="callPrepModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold">Prepare for Call with Shawn</h2>
+                <button id="closeModalBtn" class="p-2 rounded-full hover:bg-gray-200"><i class="material-icons">close</i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <div class="prep-section">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Top 6 Call Prep Essentials <span class="text-sm font-normal text-gray-500">(5-Minute Quick Review)</span></h3>
+                    <div class="space-y-3">
+                        <div class="prep-item"><i class="material-icons">history</i><div><strong>Last Contact Date & Method</strong><p>Note by Sumi - Aug 22, 2:54 AM</p></div></div>
+                        <div class="prep-item"><i class="material-icons">touch_app</i><div><strong>Recent Engagement</strong><p>Clicked on 'New Features' email yesterday. Visited pricing page 3 times this week.</p></div></div>
+                        <div class="prep-item"><i class="material-icons">flag</i><div><strong>Current Status / Opportunity Stage</strong><p>Customer</p></div></div>
+                        <div class="prep-item"><i class="material-icons">comment</i><div><strong>Key Notes or Pain Points</strong><p>Mentioned interest in expanding their digital advertising services.</p></div></div>
+                        <div class="prep-item"><i class="material-icons">task_alt</i><div><strong>Previous Actions / Promises</strong><p>Upcoming task assigned to Jasper Abrera to follow up on their latest campaign performance.</p></div></div>
+                        <div class="prep-item"><i class="material-icons">person_pin</i><div><strong>Contact Preferences & Persona</strong><p>Prefers calls in the afternoon. Decision-maker for marketing budget.</p></div></div>
+                    </div>
+                </div>
+                <div class="prep-section">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Bonus <span class="text-sm font-normal text-gray-500">(if time permits)</span></h3>
+                    <div class="space-y-3">
+                        <div class="prep-item"><i class="material-icons">business</i><div><strong>Company Context</strong><p>Yellow Pages - Local search and advertising. Recently launched a new mobile app.</p></div></div>
+                        <div class="prep-item"><i class="material-icons">label</i><div><strong>CRM Tags or Segments</strong><p class="text-gray-400 italic">No tags assigned.</p></div></div>
+                        <div class="prep-item"><i class="material-icons">event_upcoming</i><div><strong>Upcoming Meetings/Deadlines</strong><p>Q4 budget review next month.</p></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end items-center p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg space-x-3">
+                <button id="startCallBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
+                    <i class="material-icons mr-2">mic</i>
+                    Start Call
+                </button>
+                <button id="roleplayBtn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 flex items-center">
+                    <i class="material-icons mr-2">smart_toy</i>
+                    Roleplay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Transcript Modal -->
+    <div id="liveTranscriptModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold flex items-center"><span class="relative flex h-3 w-3 mr-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span></span>Live Call Transcript with Shawn</h2>
+                <button id="closeTranscriptModalBtn" class="p-2 rounded-full hover:bg-gray-200"><i class="material-icons">close</i></button>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto bg-gray-50">
+                <div id="transcriptContent" class="text-sm space-y-3">
+                    <p><strong class="text-blue-600">You:</strong> Hi Shawn, thanks for taking the time to chat today.</p>
+                    <p><strong class="text-green-600">Shawn:</strong> No problem, glad we could connect.</p>
+                    <p><strong class="text-blue-600">You:</strong> I was just reviewing your account and saw you were interested in our new advertising services. How's the new mobile app launch going?</p>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200">
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-purple-800 flex items-center mb-2"><i class="material-icons mr-2">psychology_alt</i>Ask Vendasta AI</h4>
+                    <div class="flex items-center space-x-2">
+                        <input id="aiQuestionInput" type="text" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-purple-500" placeholder="e.g., What were his past objections?">
+                        <button id="askAiBtn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Ask</button>
+                    </div>
+                    <div id="aiResponse" class="text-sm text-purple-700 mt-3 p-3 bg-purple-100 rounded-lg hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roleplay Modal -->
+    <div id="roleplayModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-800 text-white rounded-t-lg">
+                <h2 class="text-lg font-semibold flex items-center"><i class="material-icons mr-2">smart_toy</i>Roleplay with AI Sales Assistant</h2>
+                <button id="closeRoleplayModalBtn" class="p-1 rounded-full hover:bg-gray-700"><i class="material-icons">close</i></button>
+            </div>
+            <div class="flex-grow flex overflow-hidden">
+                <!-- Main video/content area -->
+                <div class="flex-grow bg-black flex items-center justify-center relative">
+                    <div class="absolute bottom-4 left-4 bg-gray-900 bg-opacity-50 text-white text-sm px-2 py-1 rounded">You</div>
+                    <i class="material-icons text-gray-600 text-8xl">videocam</i>
+                </div>
+                <!-- Right sidebar for participants and chat -->
+                <div class="w-80 bg-white flex flex-col border-l border-gray-200">
+                    <div class="p-3 border-b border-gray-200">
+                        <h3 class="font-semibold flex items-center"><i class="material-icons mr-2">people</i>Participants (2)</h3>
+                        <div class="mt-2 space-y-2 text-sm">
+                            <div class="flex items-center"><div class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">S</div>You (Sumi)</div>
+                            <div class="flex items-center"><div class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">AI</div>AI Sales Assistant</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow p-3 overflow-y-auto space-y-3" id="roleplayChatContent">
+                        <div class="text-sm"><p class="font-bold text-purple-700">AI Sales Assistant:</p><p class="bg-gray-100 p-2 rounded-lg">Ready when you are! I'll be playing the role of Shawn. Let's begin.</p></div>
+                    </div>
+                    <div class="p-3 border-t border-gray-200">
+                        <div class="flex items-center space-x-2">
+                            <input id="roleplayChatInput" type="text" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" placeholder="Ask a question...">
+                            <button id="sendRoleplayMsgBtn" class="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"><i class="material-icons">send</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="flex justify-center items-center p-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                <button id="exitRoleplayBtn" class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 flex items-center">
+                    <i class="material-icons mr-2">call_end</i>
+                    Exit Roleplay
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Accordion/Expansion Panel Logic ---
+            const panelHeaders = document.querySelectorAll('.expansion-panel-header');
+            panelHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.material-icons');
+                    content.classList.toggle('open');
+                    icon.classList.toggle('rotate-180');
+                    if (content.classList.contains('open')) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.style.paddingTop = '0.75rem';
+                        content.style.paddingBottom = '0.75rem';
+                    } else {
+                        content.style.maxHeight = '0';
+                        content.style.paddingTop = '0';
+                        content.style.paddingBottom = '0';
+                    }
+                });
+                const content = header.nextElementSibling;
+                content.style.maxHeight = '0';
+                content.style.overflow = 'hidden';
+                content.style.transition = 'max-height 0.3s ease-out, padding 0.3s ease-out';
+            });
+
+            // --- Modal Logic ---
+            const prepareCallBtn = document.getElementById('prepareCallBtn');
+            const callPrepModal = document.getElementById('callPrepModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelCallBtn = document.getElementById('cancelCallBtn');
+            const startCallBtn = document.getElementById('startCallBtn');
+            const roleplayBtn = document.getElementById('roleplayBtn');
+
+            const liveTranscriptModal = document.getElementById('liveTranscriptModal');
+            const closeTranscriptModalBtn = document.getElementById('closeTranscriptModalBtn');
+            const askAiBtn = document.getElementById('askAiBtn');
+            const aiQuestionInput = document.getElementById('aiQuestionInput');
+            const aiResponse = document.getElementById('aiResponse');
+
+            const roleplayModal = document.getElementById('roleplayModal');
+            const closeRoleplayModalBtn = document.getElementById('closeRoleplayModalBtn');
+            const exitRoleplayBtn = document.getElementById('exitRoleplayBtn');
+            const sendRoleplayMsgBtn = document.getElementById('sendRoleplayMsgBtn');
+            const roleplayChatInput = document.getElementById('roleplayChatInput');
+            const roleplayChatContent = document.getElementById('roleplayChatContent');
+
+            const openPrepModal = () => callPrepModal.classList.add('visible');
+            const closePrepModal = () => callPrepModal.classList.remove('visible');
+            const openTranscriptModal = () => liveTranscriptModal.classList.add('visible');
+            const closeTranscriptModal = () => liveTranscriptModal.classList.remove('visible');
+            const openRoleplayModal = () => roleplayModal.classList.add('visible');
+            const closeRoleplayModal = () => roleplayModal.classList.remove('visible');
+            
+            // FIX: Added null checks before adding event listeners
+            if (prepareCallBtn) prepareCallBtn.addEventListener('click', openPrepModal);
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closePrepModal);
+            if (cancelCallBtn) cancelCallBtn.addEventListener('click', closePrepModal);
+            if (closeTranscriptModalBtn) closeTranscriptModalBtn.addEventListener('click', closeTranscriptModal);
+            if (closeRoleplayModalBtn) closeRoleplayModalBtn.addEventListener('click', closeRoleplayModal);
+            if (exitRoleplayBtn) exitRoleplayBtn.addEventListener('click', closeRoleplayModal);
+            
+            if (callPrepModal) callPrepModal.addEventListener('click', (e) => e.target === callPrepModal && closePrepModal());
+            if (liveTranscriptModal) liveTranscriptModal.addEventListener('click', (e) => e.target === liveTranscriptModal && closeTranscriptModal());
+            if (roleplayModal) roleplayModal.addEventListener('click', (e) => e.target === roleplayModal && closeRoleplayModal());
+
+            if (startCallBtn) {
+                startCallBtn.addEventListener('click', () => {
+                    closePrepModal();
+                    openTranscriptModal();
+                });
+            }
+
+            if (roleplayBtn) {
+                roleplayBtn.addEventListener('click', () => {
+                    closePrepModal();
+                    openRoleplayModal();
+                });
+            }
+
+            if (askAiBtn) {
+                askAiBtn.addEventListener('click', () => {
+                    const question = aiQuestionInput.value.trim();
+                    if (!question) return;
+                    aiResponse.textContent = 'Searching records...';
+                    aiResponse.classList.remove('hidden');
+                    setTimeout(() => {
+                        if (question.toLowerCase().includes('objections')) {
+                            aiResponse.textContent = "Shawn's past objections were primarily related to budget constraints in Q2. He wanted to see a clearer ROI before committing to a higher tier package.";
+                        } else if (question.toLowerCase().includes('services')) {
+                            aiResponse.textContent = "He has shown interest in 'Digital Advertising' and 'Social Media Marketing'. He clicked on an email about the 'New Features' for these services yesterday.";
+                        } else {
+                            aiResponse.textContent = "Based on the available data, Shawn is an Account Manager at Yellow Pages. He is a key decision-maker for marketing-related purchases.";
+                        }
+                        aiQuestionInput.value = '';
+                    }, 1500);
+                });
+            }
+
+            const addChatMessage = (sender, message, isUser) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('text-sm');
+                
+                const senderP = document.createElement('p');
+                senderP.classList.add('font-bold');
+                senderP.textContent = sender + ':';
+                
+                const messageP = document.createElement('p');
+                messageP.textContent = message;
+
+                if(isUser) {
+                    senderP.classList.add('text-blue-700');
+                    messageP.classList.add('bg-blue-100', 'p-2', 'rounded-lg');
+                } else {
+                    senderP.classList.add('text-purple-700');
+                    messageP.classList.add('bg-gray-100', 'p-2', 'rounded-lg');
+                }
+                
+                messageDiv.appendChild(senderP);
+                messageDiv.appendChild(messageP);
+                roleplayChatContent.appendChild(messageDiv);
+                roleplayChatContent.scrollTop = roleplayChatContent.scrollHeight;
+            };
+
+            if (sendRoleplayMsgBtn) {
+                sendRoleplayMsgBtn.addEventListener('click', () => {
+                    const question = roleplayChatInput.value.trim();
+                    if (!question) return;
+
+                    addChatMessage('You', question, true);
+                    roleplayChatInput.value = '';
+
+                    // Simulate AI response
+                    setTimeout(() => {
+                        let response = "That's a good question. Based on my data, I'd say...";
+                        if (question.toLowerCase().includes('price') || question.toLowerCase().includes('budget')) {
+                            response = "Thanks for asking about that. We have flexible pricing tiers. Given our previous conversations about budget, I'd suggest starting with our Pro plan, which offers the best ROI for your needs.";
+                        } else if (question.toLowerCase().includes('competitors')) {
+                            response = "We differentiate ourselves from competitors through our dedicated support and proprietary AI analytics, which typically improve campaign performance by over 20%.";
+                        }
+                        addChatMessage('AI Sales Assistant', response, false);
+                    }, 1500);
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>
